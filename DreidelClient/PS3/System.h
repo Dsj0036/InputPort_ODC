@@ -62,7 +62,6 @@ const char* getAMPM(int hour) {
 		return "Invalid Hour";  // Return an error string for invalid input
 	}
 }
-
 int PATCHES_COUNT = 0;
 
 template <class TYPE_A>
@@ -1678,6 +1677,9 @@ namespace vector3_parse {
 	}
 }
 
+uint fn(void* f) {
+	return *(uintaddr)f;
+}
 char readStrWide[200];
 // 
 char* readWide(uint address, int len = 16) {

@@ -34,5 +34,17 @@
     <ClInclude Include="PS3\Libraries.h">
       <Filter>Headers\PS3</Filter>
     </ClInclude>
+    <ClInclude Include="PS3\Trace.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3\FS.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="Minecraft\Input.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="STUBS.txt" />
   </ItemGroup>
 </Project>
