@@ -1,13 +1,16 @@
 #pragma once
 #include "PS3/System.h"
-
 // 00C616B0 # CInput::Tick((void))
 namespace Input
 {
 	bool Patched = false;
 	const uint ADDRESS = 0x000C616B0;
-	const void (*d)() = 0;
+	 void (*d)() = 0;
 	int calls = 0;
+
+	bool IsWorking() {
+		return calls > 0;
+	}
 	uint __Asm() {
 		__nop();
 		__nop();
@@ -19,15 +22,17 @@ namespace Input
 		if (d) {
 			d();
 		}
+		if (calls == 1) {
+			dbgl("CInput::Tick((void)) Works !!");
+		}
 		calls++;
 		__Asm();
 	}
-	void Hook(const void(*delegated)()) {
+	inline void Hook( void(*delegated)()) {
 		d = delegated; 
 		hookfunction(ADDRESS, fn(__Addition), fn(__Asm));
-		
 	}
-	void Unhook() {
+	inline void Unhook() {
 		calls = 0;
 		UnHookFunctionStart(ADDRESS, fn(__Asm));
 	}

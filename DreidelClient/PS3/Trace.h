@@ -50,3 +50,4 @@ namespace debug {
 }
 
 #define dbg debug::out::write
+#define dbgl debug::out::writeL

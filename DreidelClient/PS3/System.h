@@ -38,7 +38,7 @@
 #include "cell/dbgrsx.h"
 #include "NpBasic.h"
 // http
-
+#include "PS3/Types.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

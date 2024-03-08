@@ -43,6 +43,12 @@
     <ClInclude Include="Minecraft\Input.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="PS3\PadHelper.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputConverter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="STUBS.txt" />

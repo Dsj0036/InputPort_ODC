@@ -55,25 +55,25 @@ struct point
 
 public:
     point() {  }
-    point(int x, int y) : X(x), Y(y) {
+    point(int x, int y) : x(x), y(y) {
     }
-    point(bool isBoolean) { if (isBoolean) { X = 0; Y = 1; } }
-    int X{ 0 };
-    int Y{ 0 };
+    point(bool isBoolean) { if (isBoolean) { x = 0; y = 1; } }
+    int x{ 0 };
+    int y{ 0 };
     point Append(int x, int y)
     {
-        return point(X + x, Y + y);
+        return point(x + x, y + y);
     }
     point Append(point increment) {
-        return point(X + increment.X, Y + increment.Y);
+        return point(x + increment.x, y + increment.y);
     }
     uint32_t* Unsigned() {
         uint32_t v[2]
-        { uint32_t(X), uint32_t(Y) };
+        { uint32_t(x), uint32_t(y) };
         return v;
     }
     bool operator == (point alt) {
-        return alt.X == X && alt.Y == Y;
+        return alt.x == x && alt.y == y;
     }
 };
 char memory(unsigned int offset) {

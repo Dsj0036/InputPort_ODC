@@ -75,12 +75,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h" />
+    <ClInclude Include="InputConverter.h" />
     <ClInclude Include="Minecraft\Input.h" />
     <ClInclude Include="NpBasic.h" />
     <ClInclude Include="PS3\FS.h" />
     <ClInclude Include="PS3\Interop.h" />
     <ClInclude Include="PS3\Libraries.h" />
     <ClInclude Include="PS3\NpCommon.h" />
+    <ClInclude Include="PS3\PadHelper.h" />
     <ClInclude Include="PS3\System.h" />
     <ClInclude Include="PS3\Trace.h" />
     <ClInclude Include="PS3\Types.h" />
