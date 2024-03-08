@@ -88,6 +88,10 @@ void removeWord(char* str, const char* wordToRemove) {
 		}
 	}
 }
+#define MAKE_FN(address, return_type, func_name, args) \
+    uint32_t func_name##opd[2] = { address, 0x014CDAB0 }; \
+    using func_name##_t = return_type(*)args; \
+    func_name##_t func_name = (func_name##_t)func_name##opd;
 int get_address(void* foo) {
 	return reinterpret_cast<int>(&foo);
 }
@@ -1677,7 +1681,7 @@ namespace vector3_parse {
 	}
 }
 
-uint fn(void* f) {
+uint32_t fn(void* f) {
 	return *(uintaddr)f;
 }
 char readStrWide[200];

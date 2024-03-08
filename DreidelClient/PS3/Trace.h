@@ -8,7 +8,7 @@ namespace debug {
 	{
 		truncateFile(fn);
 		createFile(fn);
-		appendStringToFile("Create trace\n");
+		appendStringToFile(fn, "Create trace\n");
 	}
 	int clear() {
 		if (deleteFile(fn)) {
@@ -28,7 +28,7 @@ namespace debug {
 		}
 		void writeL(char* strptr) {
 			appendStringToFile(fn, strptr);
-			write(10);
+			write("\n");
 		}
 		void writeif(bool expr, char* outp) {
 			if (expr) {
@@ -45,6 +45,11 @@ namespace debug {
 				_sys_sprintf(foofrm_mem, strfrmptr, i);
 				write(foofrm_mem);
 			}
+		}
+		void write_assert(uint err, char* name) {
+			char c[50];
+			snprintf(c,50, "%s: (%i) (0x%x)", name, err, err);
+			writeL(c);
 		}
 	}
 }

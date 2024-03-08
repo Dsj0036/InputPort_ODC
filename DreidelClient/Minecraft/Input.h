@@ -5,39 +5,33 @@
 //00C62500 # CInput::GetJoypadStick_LY((int, bool))
 namespace Input
 {
-	bool Patched = false;
-	const uint ADDRESS = 0x00C62500;
-	 void (**d)() = 0;
+	const uint ADDRESS = 0x00C619E0;
+	 void (*d)() = 0;
 	int calls = 0;
 
 	bool IsWorking() {
 		return calls > 0;
 	}
-	uint __Asm(int a, bool b) {
+	uint __Asm(uint, uint, uint) {
 		__nop();
 		__nop();
 		__nop();
 		__nop();
 		__nop();
 	}
-	uint __Addition(int a , bool b) {
+	uint __Addition(uint a, uint b, uint c) {
 		if (d) {
-			if (*d)
-			{
-				(*d)();
-			}
+				(d)();	
 		}
 		if (calls == 1) {
-			dbgl("CInput::Tick((void)) Works !!");
-			MessageDialog::Show("CInput::Tick((void)) Works !!", 5000);
+			MessageDialog::Show("CInput::GetValue Works !!", 5000);
 		}
 		calls++;
-		return __Asm(a, b);
+		return __Asm(a,b,c);
 	}
 	inline void Hook( void(*delegated)()) {
-		d = &delegated; 
-		MessageDialog::Show("Hooked!\n00C616B0 # CInput::Tick((void))");
-		
+		d = delegated; 
+		MessageDialog::Show("Hooked!\n00C616B0 # CInput::GetValue())");
 		
 		hookfunction(ADDRESS, fn(__Addition), fn(__Asm));
 	}
