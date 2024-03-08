@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="Entry.h" />
     <ClInclude Include="InputConverter.h" />
+    <ClInclude Include="Minecraft\Game.h" />
     <ClInclude Include="Minecraft\Input.h" />
     <ClInclude Include="NpBasic.h" />
     <ClInclude Include="PS3\Dialog.h" />

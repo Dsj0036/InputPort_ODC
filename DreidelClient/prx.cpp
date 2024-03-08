@@ -10,7 +10,7 @@ sys_ppu_thread_t t;
 extern "C" int sys_ps3_prx_entry(void) {
 	
 	sys_ppu_thread_create(&t, main, 0, 1200, 30000, 0, "INPUT_PORT");
-
+	
 	
 	return 0;
 }

@@ -46,11 +46,20 @@ namespace IConverter
 		if (con[0]) {
 			CellKbData kbdata;
 			
+			
 			uint e = Pad::GetKeyboardData(0, &kbdata);
-			if (e == 0) {
-				if (kbdata.keycode[0] == (CELL_KEYC_SPACE | CELL_KB_RAWDAT)) {
-					MessageDialog::ShowOk("U pressed SPACE.");
-				}
+			if (e == 0 && kbdata.len > 0) {
+				//char sample[50];
+				//_sys_snprintf(sample, 50, "1: %i\n2: %i\n3: %i\n4: %i\n5: %i\n6: %i\n7: %i\n",
+				//	kbdata.keycode[0],
+				//	kbdata.keycode[1],
+				//	kbdata.keycode[2],
+				//	kbdata.keycode[3],
+				//	kbdata.keycode[4],
+				//	kbdata.keycode[5],
+				//	kbdata.keycode[6]);
+				//cellMsgDialogAbort();
+				//MessageDialog::ShowOk(sample);
 			}
 		}
 		if (con[1]) {
@@ -62,6 +71,7 @@ namespace IConverter
 		debug::out::write_assert(cellKbSetLEDStatus(0, CellKbLedMode::CELL_KB_LED_MODE_AUTO1), "cellKbSetLEDStatus");
 		debug::out::write_assert(cellKbSetCodeType(0, CELL_KB_CODETYPE_RAW), "cellKbSetCodeType");
 		debug::out::write_assert(cellKbSetReadMode(0, 1), "cellKbSetReadMode"); // Readmode: PACKET
+		
 		debug::out::writeL("Modes updated.");
 	}
 	void Register() {

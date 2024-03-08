@@ -52,6 +52,9 @@
     <ClInclude Include="PS3\Dialog.h">
       <Filter>Headers\PS3</Filter>
     </ClInclude>
+    <ClInclude Include="Minecraft\Game.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="STUBS.txt" />
