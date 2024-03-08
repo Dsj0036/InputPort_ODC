@@ -75,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h" />
+    <ClInclude Include="NpBasic.h" />
+    <ClInclude Include="PS3\Interop.h" />
+    <ClInclude Include="PS3\Libraries.h" />
+    <ClInclude Include="PS3\NpCommon.h" />
+    <ClInclude Include="PS3\System.h" />
+    <ClInclude Include="PS3\Types.h" />
   </ItemGroup>
   <Import Condition="'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets')" Project="$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

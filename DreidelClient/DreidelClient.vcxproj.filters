@@ -8,10 +8,31 @@
     <Filter Include="Headers">
       <UniqueIdentifier>{123ca225-922b-43db-a492-06a82fbd55b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\PS3">
+      <UniqueIdentifier>{732a183f-8890-4bf0-a949-926707edd163}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3\System.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="NpBasic.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3\Interop.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3\NpCommon.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3\Types.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3\Libraries.h">
+      <Filter>Headers\PS3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
