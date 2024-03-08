@@ -38,7 +38,7 @@
 #include <sysutil/sysutil_msgdialog.h>
 #include "Trace.h"
 #pragma once
-namespace diag
+namespace MessageDialog
 {
 	void Show(char* message, float delayMs = 10000)
 	{

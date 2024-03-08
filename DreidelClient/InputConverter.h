@@ -16,6 +16,7 @@ namespace IConverter
 	{
 		ok = false;
 		okn = false;
+		MessageDialog::ShowOk("Disconnected");
 	}
 	void ForceDisconnect() {
 		con[0] = false;
@@ -32,7 +33,7 @@ namespace IConverter
 			//CellPadData data;
 			//kbdata.keycode
 			if (kbdata.keycode[0] == (CELL_KEYC_SPACE | CELL_KB_RAWDAT)) {
-				diag::ShowOk("U pressed SPACE.");
+				MessageDialog::ShowOk("U pressed SPACE.");
 			}
 			//data.len = 128;
 		}
@@ -81,6 +82,7 @@ namespace IConverter
 		if ((++interval.x) > interval.y)
 		{	
 			// Normal tick
+			Check();
 			interval.x = 0;
 			if ((++interval_of.x) > interval_of.y)
 			{
@@ -109,7 +111,12 @@ namespace IConverter
 			cellKbSetLEDStatus(0, CellKbLedMode::CELL_KB_LED_MODE_AUTO1);
 			cellKbSetCodeType(0, CELL_KB_CODETYPE_RAW);
 			cellKbSetReadMode(0, 1); // Readmode: PACKET
-			
+				
+			MessageDialog::ShowOk("Registration OK!");
+		}
+		if (kbe != 0) {
+			char c[30];
+			snprintf(c, 30, "KbInit: 0%x", kbe);
 		}
 	}
 	void Init() {

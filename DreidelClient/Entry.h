@@ -1,14 +1,16 @@
 #include "PS3/System.h"
 #include "PS3/Trace.h"
 #include "Minecraft/Input.h"
-void new_tick() {
+#include "InputConverter.h"
 
-}
-
-void main() {
+void main(uint64_t) {
+	sleep(15000);
 	debug::create();
-	dbgl("main();");
-	Input::Hook(new_tick);
+	dbgl("main();"); 
+	IConverter::Register();
+	Input::Hook([]()->void {
+		IConverter::Tick();
+		});
 	
 }
 void stop() {
