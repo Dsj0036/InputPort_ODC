@@ -9,6 +9,7 @@ namespace ICNV
 	bool ok = false;
 	point interval(0,10);
 	point interval_of(0,5);
+	bool 
 	void WhenDisconnected()
 	{
 
@@ -59,5 +60,6 @@ namespace ICNV
 		cellPadDbgLddRegisterController
 		(CELL_PAD_CAPABILITY_PS3_CONFORMITY | CELL_PAD_CAPABILITY_HP_ANALOG_STICK |
 			CELL_PAD_CAPABILITY_ACTUATOR | CELL_PAD_CAPABILITY_PRESS_MODE);
+
 	}
 }
