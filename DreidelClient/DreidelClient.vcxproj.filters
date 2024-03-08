@@ -49,6 +49,9 @@
     <ClInclude Include="InputConverter.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="PS3\Dialog.h">
+      <Filter>Headers\PS3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="STUBS.txt" />

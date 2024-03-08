@@ -78,6 +78,7 @@
     <ClInclude Include="InputConverter.h" />
     <ClInclude Include="Minecraft\Input.h" />
     <ClInclude Include="NpBasic.h" />
+    <ClInclude Include="PS3\Dialog.h" />
     <ClInclude Include="PS3\FS.h" />
     <ClInclude Include="PS3\Interop.h" />
     <ClInclude Include="PS3\Libraries.h" />
