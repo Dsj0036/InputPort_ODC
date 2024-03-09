@@ -48,6 +48,7 @@ namespace IConverter
 			
 			
 			uint e = Pad::GetKeyboardData(0, &kbdata);
+			
 			if (e == 0 && kbdata.len > 0) {
 				//char sample[50];
 				//_sys_snprintf(sample, 50, "1: %i\n2: %i\n3: %i\n4: %i\n5: %i\n6: %i\n7: %i\n",

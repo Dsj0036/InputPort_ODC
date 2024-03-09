@@ -1,5 +1,6 @@
 #pragma once
 #include "PS3/System.h"
+#include "wchar.h"
 #pragma once
 
 class Vec3
@@ -829,42 +830,59 @@ private: static const uint ADDR = 0x014CF2E4;
 public: static TheMinecraft get_pointer() {
 	return *(TheMinecraft*)ADDR;
 }
-	  public: static class Joypad
+	  template<typename R, typename ... Arguments>
+	  class FunctionCaller
 	  {
-	  public: static class ButtonsPS3 {
-	  public: typedef unsigned int ButtonBuffer ;
-	  public :const static BufferBuffer X = 0x100;
 
-			  X = 0x100,
-			  O = 0x200,
-			  SQUARE = 0x400,
-			  TRIANGLE = 0x800,
-			  UP = 0x40000,
-			  DOWN = 0x80000,
-			  LEFT = 0x100000,
-			  RIGHT = 0x200000,
-			  R1 = 0x4000,
-			  R2 = 0x70000000,
-			  R3 = 0x10000,
-			  L1 = 0x8000,
-			  L2 = 0x0,
-			  L3 = 0x20000,
-			  START = 0x2000,
-			  SELECT = 0x1000,
-			  JOYSTICK_L3_UP = 0x20000000,
-			  JOYSTICK_L3_DOWN = 0x10000000,
-			  JOYSTICK_L3_LEFT = 0x00800000,
-			  JOYSTICK_L3_RIGHT = 0x00400000;
+#define MAKE_FN(address, return_type, func_name, args) \
+	uint32_t func_name##opd[2] = { address, 0x014CDAB0 }; \
+	using func_name##_t = return_type(*)args; \
+	func_name##_t func_name = (func_name##_t)func_name##opd;
+
+	  public: static inline R Call(long long function, Arguments... args)
+	  {
+		  int toc_t[2] = { function, 0x014CDAB0 };
+		  R(*temp)(Arguments...) = (R(*)(Arguments...)) & toc_t;
+		  return temp(args...);
+	  }
 
 	  };
-	  public: static uint GetJoypadState() {
-		  return *(uint*)(0x3000CF79);
-	  }
-	  public: static bool IsPressing(uint buffer) {
-		  return(GetJoypadState() & buffer) > 0;
-	  }
-	  
-	  };
+public: static class Joypad
+{
+public: static class ButtonsPS3 {
+public: typedef unsigned int ButtonBuffer;
+public: const static ButtonBuffer X = 0x100,
+
+	X = 0x100,
+	O = 0x200,
+	SQUARE = 0x400,
+	TRIANGLE = 0x800,
+	UP = 0x40000,
+	DOWN = 0x80000,
+	LEFT = 0x100000,
+	RIGHT = 0x200000,
+	R1 = 0x4000,
+	R2 = 0x70000000,
+	R3 = 0x10000,
+	L1 = 0x8000,
+	L2 = 0x0,
+	L3 = 0x20000,
+	START = 0x2000,
+	SELECT = 0x1000,
+	JOYSTICK_L3_UP = 0x20000000,
+	JOYSTICK_L3_DOWN = 0x10000000,
+	JOYSTICK_L3_LEFT = 0x00800000,
+	JOYSTICK_L3_RIGHT = 0x00400000;
+
+};
+public: static uint GetJoypadState() {
+	return *(uint*)(0x3000CF79);
+}
+public: static bool IsPressing(ButtonsPS3::ButtonBuffer buffer) {
+	return(GetJoypadState() & buffer) > 0;
+}
+
+};
 public: static class PlayerState {
 public:static enum STATE {
 	Ingame = 0,
@@ -873,19 +891,127 @@ public:static enum STATE {
 	Floating = 3,
 	Flying = 4,
 	Sprinting = 5,
+	Regeneration = 6,
+	InPortal,
+	Collided,
 
 };
 };
 
+public:static class GuiComponentController {
+private:
+	struct font_t {
+
+		char __padd000[0x0004];
+		const wchar_t* text;
+		int dataType;
+		char __padd001[0x0008];
+		int wcstrlen;
+		int wcstrlen1;
+		char __padd002[0x0008];
+		float unknown1;
+		float unknown2;
+		float unknown3;
+		float unknown4;
+	};
+public: static font_t GetTextComponent(wchar_t* a)
+{
+	font_t font;
+	font.text = a;
+	font.dataType = 7;
+	font.wcstrlen = wcslen(a);
+	font.wcstrlen1 = wcslen(a) + 3;
+	font.unknown1 = 1.0625f;//2.0625f
+	font.unknown1 = 0.4f; //1.0f
+	font.unknown1 = 1.0078125f;
+	return font;
+
+}
+
+	  // 	MAKE_FN(0xA8B55C, void, setSingleMessage, (void* guiComponent, uint32_t r4, uint32_t a, uint32_t b));
+  //	MAKE_FN(0xA8AC8C, void, addMessage, (void* guiComponent, uint32_t text, int unk_0x0, bool unk_0x1, bool unk_0x2, bool unk_0x3, bool unk_0x4));
+public:static void DisplayClientMessage(const wchar_t* m) {
+	FunctionCaller < uint, void*, uint32_t, int, bool, bool, bool, bool>::Call(
+		0xA8AC8C, 0x00, (uint)&GuiComponentController::GetTextComponent((wchar_t*)m), 0, false, false, false, false);
+}public:static void DisplayHeaderMessage(const wchar_t* m) {
+	FunctionCaller <void, void*, uint32_t, uint32_t, uint32_t>::Call(
+		0xA8B55C, 0x00, (uint)&GuiComponentController::GetTextComponent((wchar_t*)m), 0, 0);
+
+}
+public: static const bool MustShowArmor = (bool*)0x0090B5F0;
+public: static const bool Dim = (bool*)0x0155847C;
+
+public: static void DisableRendering() {
+	*(int*)(0x00884148) = 0x41;
+}
+public: static void EnableRendering() {
+
+	*(int*)(0x00884148) = 0x40;
+}
+public: static bool IsModalActive() {
+	return (*(int*)(unsigned int)(0x3000CF68)) > 0;
+}
+public: static void ShowActiveBar(bool t) {
+	*(int*)(0x0090FCC0) = t ? 0x40 : 0x41;
+}
+public: static void Reload() {
+	(*(int*)(0x014CE214)) = 1;
+}
+};
 public: static uint64_t GetGameTime() {
 	auto game = get_pointer();
 	return game.gameTime;
 };
 public: static class Player
 {
+public: static const bool MustPlaceBlocks = (bool*)(0x007D75A3);
 public: static const PlayerState::STATE GetState() {
+	auto game = Game::get_pointer();
+	bool regening = game.theMinecraft->cMultiplayerLocalPlayer->hurtResistantTime != 0;
 
+	bool died = game.theMinecraft->cMultiplayerLocalPlayer->isDead;
+	bool inground = game.theMinecraft->cMultiplayerLocalPlayer->onGround;
+	bool inportal = game.theMinecraft->cMultiplayerLocalPlayer->inPortal;
+	bool inwater = game.theMinecraft->cMultiplayerLocalPlayer->inWater;
+	bool collided = game.theMinecraft->cMultiplayerLocalPlayer->isCollided;
+	bool sprint =
+		((Joypad::IsPressing(Joypad::ButtonsPS3::JOYSTICK_L3_UP) ||
+			(Joypad::IsPressing(Joypad::ButtonsPS3::JOYSTICK_L3_LEFT) ||
+				(Joypad::IsPressing(Joypad::ButtonsPS3::JOYSTICK_L3_RIGHT)) && Joypad::IsPressing(Joypad::ButtonsPS3::L3))));
+	bool sprinting = (!(GuiComponentController::IsModalActive() && GuiComponentController::Dim)) && sprint;
+
+	if (regening)
+	{
+		return PlayerState::Regeneration;
+	}
+	else if (inportal) {
+		return PlayerState::Regeneration;
+	}
+	else if (sprinting && collided)
+	{
+		return PlayerState::Sprinting;
+	}
+	else if (!inground) {
+		return PlayerState::Floating;
+	}
+	else if (inwater) {
+		return PlayerState::InWater;
+	}
+	else if (died) {
+		return PlayerState::Died;
+	}
+	else
+	{
+		if (sprinting && (!collided)) {
+			return PlayerState::Flying;
+		}
+		else
+		{
+			return  collided ? PlayerState::Ingame : PlayerState::Floating;
+		}
+	}
 }
+
 public: static const wchar_t* GetUsername() {
 
 	auto game = get_pointer();
@@ -899,13 +1025,50 @@ public:static Vec3 GetPosition() {
 		(float)game.theMinecraft->cMultiplayerLocalPlayer->LocationZ
 	);
 };
+public:static Vec3 GetChunkPosition() {
+	auto game = get_pointer();
+	return Vec3(
+		(int)game.theMinecraft->cMultiplayerLocalPlayer->chunkCoordX,
+		(int)game.theMinecraft->cMultiplayerLocalPlayer->chunkCoordY,
+		(int)game.theMinecraft->cMultiplayerLocalPlayer->chunkCoordZ
+	);
 };
-
-
-
-
+public:static int GetHurtResistantTime() { return  ((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->hurtResistantTime; }
+public:static int GetDimension() { return  ((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->dimension; }
+public:static int GetId() { return  ((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->entityId; }
+public:static float GetFallDistance() { return  ((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->fallDistance; }
+public:static bool IsSpawnForced() { return  ((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->forceSpawn; }
+public:static uint GetType() { return  ((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->GetType(); }
+public:static point GetMotion() {
+	point p;
+	auto game = get_pointer();
+	p.Append(game.theMinecraft->cMultiplayerLocalPlayer->rotationYaw, game.theMinecraft->cMultiplayerLocalPlayer->rotationPitch);
+	return p;
+}; 
+public:static void SetMotion(int yaw, int pitch) {
+	((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->rotationYaw = yaw;
+	((TheMinecraft*)ADDR)->theMinecraft->cMultiplayerLocalPlayer->rotationPitch = yaw;
 };
+public:static void SetFixedPosition(Vec3 vec) {
 
-void simple_Example() {
+	auto gamePtr = ((TheMinecraft*)ADDR);
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->SetPosition(vec.x, vec.y, vec.z);
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->posX = vec.x;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->posY = vec.y;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->posZ = vec.z;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->LocationX = vec.x;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->LocationY = vec.y;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->LocationZ = vec.z;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->prevPosX = vec.x;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->prevPosY = vec.y;
+	gamePtr->theMinecraft->cMultiplayerLocalPlayer->prevPosZ = vec.z;
 
 }
+	 
+
+};
+
+
+
+};
+
