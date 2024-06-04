@@ -1,6 +1,6 @@
 #pragma once
-#include "PS3/System.h"
-#include "PS3/Dialog.h"
+#include "C:\Users\root\Documents\GitHub\PS3_CELL_UTIL\System.h"
+#include "Dialog.h"
 // 00C616B0 # CInput::Tick((void))
 //00C62500 # CInput::GetJoypadStick_LY((int, bool))
 namespace Input

@@ -1,6 +1,8 @@
 #pragma once
-#include "PS3/System.h"
+#include "C:\Users\root\Documents\GitHub\PS3_CELL_UTIL\System.h"
 #include "PS3/PadHelper.h"
+#include <C:\Users\root\Documents\Visual Studio 2013\Projects\DreidelClient\DreidelClient\PS3\Types.h>
+
 #include "cell/pad/libpad_dbg.h"
 MAKE_FN(0x886798, void, ConsoleUIController_PlayUISFX, (uintptr_t consoleUIController, uintptr_t soundEvent));
 #include "PS3/Dialog.h"

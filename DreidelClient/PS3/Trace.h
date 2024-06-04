@@ -1,6 +1,8 @@
 #pragma once
 #include "FS.h"
 #include "cell/rtc.h"
+#include "Interop.h"
+#include "Types.h"
 namespace debug {
 	
 	char* fn = "/dev_hdd0/tmp/InputPort.log";

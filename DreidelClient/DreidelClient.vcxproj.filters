@@ -16,22 +16,10 @@
     <ClInclude Include="Entry.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="PS3\System.h">
-      <Filter>Headers\PS3</Filter>
-    </ClInclude>
-    <ClInclude Include="NpBasic.h">
-      <Filter>Headers\PS3</Filter>
-    </ClInclude>
     <ClInclude Include="PS3\Interop.h">
       <Filter>Headers\PS3</Filter>
     </ClInclude>
-    <ClInclude Include="PS3\NpCommon.h">
-      <Filter>Headers\PS3</Filter>
-    </ClInclude>
     <ClInclude Include="PS3\Types.h">
-      <Filter>Headers\PS3</Filter>
-    </ClInclude>
-    <ClInclude Include="PS3\Libraries.h">
       <Filter>Headers\PS3</Filter>
     </ClInclude>
     <ClInclude Include="PS3\Trace.h">
@@ -51,9 +39,6 @@
     </ClInclude>
     <ClInclude Include="PS3\Dialog.h">
       <Filter>Headers\PS3</Filter>
-    </ClInclude>
-    <ClInclude Include="Minecraft\Game.h">
-      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
